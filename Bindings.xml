@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="PG_RANDOM_HEARTHSTONE" category="BINDING_HEADER_SOLAQOL">
+        PGRandomHearthstoneBtn:Click()
+    </Binding>
+</Bindings>

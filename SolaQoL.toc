@@ -1,0 +1,22 @@
+## Interface: 120005, 120007
+## Title: SolaQoL
+## Notes: Automatic Greeting and Better Sound Alerts
+## Author: progative
+## Version: 0.5.2
+## SavedVariables: SolaQoLDB
+## SavedVariablesPerCharacter: SolaQoLCharDB
+
+Locales/Locale.lua
+Locales/Locale_koKR.lua
+Core.lua
+SpecDisplay.lua
+PortalOverlay.lua
+ItemLevelScan.lua
+TradeReport.lua
+LustBar.lua
+KeywordAlert.lua
+AutoRelease.lua
+AutoReleaseHUD.lua
+RandomHearthstone.lua
+SolaQoL.lua
+ConfigUI.lua
