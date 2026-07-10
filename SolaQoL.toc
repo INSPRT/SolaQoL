@@ -2,7 +2,7 @@
 ## Title: SolaQoL
 ## Notes: Automatic Greeting and Better Sound Alerts
 ## Author: progative
-## Version: 0.5.2
+## Version: 0.5.3
 ## SavedVariables: SolaQoLDB
 ## SavedVariablesPerCharacter: SolaQoLCharDB
 
