@@ -161,7 +161,49 @@ local function CreateEditBox(parent, width)
 end
 
 
-local function CreateDropdown(parent, width, getOptionsFunc)
+local function PlaySoundPreview(val, defaultSoundKit)
+    if not val or val == "" or val == "custom" then return end
+    
+    if val == "default" and defaultSoundKit then
+        PlaySound(defaultSoundKit, "Master")
+        return
+    end
+
+    local SOUND_PRESETS = {
+        whisper      = 3081,    -- gentle ding
+        ready_check  = 843,
+        raid_warning = 8959,
+        level_up     = 1422,
+        alarm        = 11466,
+    }
+
+    if SOUND_PRESETS[val] then
+        PlaySound(SOUND_PRESETS[val], "Master")
+    else
+        local path = val
+        local lsm = LibStub and LibStub("LibSharedMedia-3.0", true)
+        if lsm then
+            path = lsm:Fetch("sound", val) or val
+        end
+        if path == "KeywordSound" then
+            path = "Interface\\AddOns\\SolaQoL\\Media\\KeywordSound.mp3"
+        end
+        if path and path ~= "" then
+            local lowerPath = string.lower(path)
+            if string.find(lowerPath, "\\") or string.match(lowerPath, "%.mp3$") or string.match(lowerPath, "%.ogg$") or string.match(lowerPath, "%.wav$") then
+                PlaySoundFile(path, "Master")
+            else
+                local kitId = tonumber(path)
+                if kitId then
+                    PlaySound(kitId, "Master")
+                end
+            end
+        end
+    end
+end
+
+
+local function CreateDropdown(parent, width, getOptionsFunc, isSound, defaultSoundKit)
     local btn = CreateFrame("Button", nil, parent, "BackdropTemplate")
     btn:SetSize(width, 26)
     btn:SetBackdrop({
@@ -234,7 +276,11 @@ local function CreateDropdown(parent, width, getOptionsFunc)
 
             local itemText = item:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
             itemText:SetPoint("LEFT", item, "LEFT", 8, 0)
-            itemText:SetPoint("RIGHT", item, "RIGHT", -2, 0)
+            if isSound and opt.value ~= "custom" and opt.value ~= "" then
+                itemText:SetPoint("RIGHT", item, "RIGHT", -24, 0)
+            else
+                itemText:SetPoint("RIGHT", item, "RIGHT", -2, 0)
+            end
             itemText:SetJustifyH("LEFT")
             itemText:SetText(opt.name)
             itemText:SetTextColor(C.fgMain[1], C.fgMain[2], C.fgMain[3])
@@ -246,6 +292,31 @@ local function CreateDropdown(parent, width, getOptionsFunc)
                 menu:Hide()
                 if btn.onSelect then btn.onSelect(opt.value) end
             end)
+
+            if isSound and opt.value ~= "custom" and opt.value ~= "" then
+                local playBtn = CreateFrame("Button", nil, item)
+                playBtn:SetSize(20, 18)
+                playBtn:SetPoint("RIGHT", item, "RIGHT", -4, 0)
+
+                local playText = playBtn:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+                playText:SetPoint("CENTER")
+                playText:SetText("▶")
+                playText:SetTextColor(0.8, 0.6, 0.4)
+                playBtn.text = playText
+
+                playBtn:SetScript("OnEnter", function()
+                    playText:SetTextColor(1, 0.8, 0.6)
+                    itemBg:Show()
+                end)
+                playBtn:SetScript("OnLeave", function()
+                    playText:SetTextColor(0.8, 0.6, 0.4)
+                    itemBg:Hide()
+                end)
+                playBtn:SetScript("OnClick", function()
+                    PlaySoundPreview(opt.value, defaultSoundKit)
+                end)
+            end
+
             lastBtn = item
         end
         self.menu = menu
@@ -441,6 +512,12 @@ local function CreateSoundRow(parent, labelText, dbKeyPath, dbKeyMute,
             { name = L.SOUND_OPT_CUSTOM or "Custom Path", value = "custom" },
             { name = L.SOUND_OPT_DEFAULT or "Default Sound", value = "default" },
         }
+        for i = 1, 9 do
+            table.insert(opts, {
+                name = string.format(L.SOUND_NOTIFICATION_FMT or "Sound %d", i),
+                value = "FreeNotification" .. i
+            })
+        end
         local seen = {}
         for _, o in ipairs(opts) do
             seen[o.name] = true
@@ -463,7 +540,7 @@ local function CreateSoundRow(parent, labelText, dbKeyPath, dbKeyMute,
         return opts
     end
 
-    local dd = CreateDropdown(parent, 180, GetOptions)
+    local dd = CreateDropdown(parent, 180, GetOptions, true, defaultSoundKit)
     dd:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -4)
     row.dd = dd
 
@@ -1434,11 +1511,13 @@ builders.ilvl = function(parent)
         local opts = {
             {name = "KeywordSound (기본)", value = "KeywordSound"},
             {name = "귓속말 (Whisper)", value = "whisper"},
-            {name = "준비 완료 (Ready)", value = "ready_check"},
-            {name = "공격대 경보 (Raid Warning)", value = "raid_warning"},
-            {name = "레벨업 (Level Up)", value = "level_up"},
-            {name = "경고음 (Alarm)", value = "alarm"},
         }
+        for i = 1, 9 do
+            table.insert(opts, {
+                name = string.format(L.SOUND_NOTIFICATION_FMT or "Sound %d", i),
+                value = "FreeNotification" .. i
+            })
+        end
         local seen = {}
         for _, o in ipairs(opts) do
             seen[o.name] = true
@@ -1461,7 +1540,7 @@ builders.ilvl = function(parent)
         return opts
     end
 
-    local kwSndDropdown = CreateDropdown(ct, 180, GetSoundOptions)
+    local kwSndDropdown = CreateDropdown(ct, 180, GetSoundOptions, true)
     kwSndDropdown:SetPoint("LEFT", kwSndLabel, "RIGHT", 8, 0)
     kwSndDropdown.onSelect = function(val)
         SolaQoLDB.keywordAlertSound = val

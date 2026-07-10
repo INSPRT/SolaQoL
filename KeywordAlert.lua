@@ -30,6 +30,9 @@ local SOUND_PRESETS = {
 local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
 if LSM then
     LSM:Register("sound", "KeywordSound", "Interface\\AddOns\\SolaQoL\\Media\\KeywordSound.mp3")
+    for i = 1, 9 do
+        LSM:Register("sound", "FreeNotification" .. i, "Interface\\AddOns\\SolaQoL\\Media\\Notifications\\FreeNotification" .. i .. ".mp3")
+    end
 end
 
 -- Check if a string is a combat-protected secret string

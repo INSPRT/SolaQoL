@@ -97,6 +97,7 @@ L.OPEN_SOUND_SETTINGS   = "사용자 설정 알림음 경로 지정.."
 
 -- ===== Sound Config Window =====
 L.SOUND_TITLE           = "사운드 경로 설정"
+L.SOUND_NOTIFICATION_FMT = "알림음 %d"
 L.SOUND_HINT            = "* 빈칸으로 저장 시 기본 알림음이 재생됩니다."
 L.SOUND_NEW_LABEL       = "파티 합류 알림음 사용자 설정"
 L.SOUND_NEW_SAVED       = "파티 합류 사운드 경로 저장됨"

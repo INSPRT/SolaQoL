@@ -91,6 +91,7 @@ L.OPEN_SOUND_SETTINGS   = "Custom Alert Sound Path.."
 
 -- ===== Sound Config Window =====
 L.SOUND_TITLE           = "Sound Path Settings"
+L.SOUND_NOTIFICATION_FMT = "Sound %d"
 L.SOUND_HINT            = "* Saving with an empty field will use the default alert sound."
 L.SOUND_NEW_LABEL       = "Custom Party Join Alert Sound"
 L.SOUND_NEW_SAVED       = "Party join sound path saved"
