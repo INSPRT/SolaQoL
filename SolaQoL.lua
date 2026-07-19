@@ -248,7 +248,9 @@ f:SetScript("OnEvent", function(_, ev, arg1, arg2)
         rosterTimer = C_Timer.NewTimer(0.2, OnRosterUpdate)
 
     elseif ev == "GROUP_JOINED" then
-        St.shouldGreet = true
+        if St.isInit then
+            St.shouldGreet = true
+        end
 
     elseif ev == "GROUP_LEFT" then
         St.shouldGreet = false
@@ -261,7 +263,7 @@ f:SetScript("OnEvent", function(_, ev, arg1, arg2)
         NS.ActiveTitleCache = ""
         if SolaQoLDB.enableGG and IsInGroup() and not IsInRaid() and (NS.Now() - St.lastClear) > 10.0 then
             St.lastClear = NS.Now()
-            NS.DelayChat(SolaQoLDB.msgGG, "PARTY", 50, 90, true)
+            NS.DelayChat(SolaQoLDB.msgGG, "PARTY", 80, 120, true)
         end
 
 
