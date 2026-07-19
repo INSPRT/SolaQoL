@@ -312,7 +312,7 @@ end)
 
 -- Bind portal spell & update visuals (must run out of combat)
 local function ApplyPortalUI(spellID, dungeonName, title)
-
+    local isNewPortal = not PortalBtn:IsShown() or PortalBtn.spellID ~= spellID
     local spellName, spellIcon, isKnown
     if C_Spell and C_Spell.GetSpellInfo then
         local info = C_Spell.GetSpellInfo(spellID)
@@ -395,7 +395,9 @@ local function ApplyPortalUI(spellID, dungeonName, title)
     PortalBtn:Show()
 
 
-    print("|cff00ccff[SolaQoL]|r " .. string_format(L.PORTAL_ACTIVATED_FMT, dungeonName))
+    if isNewPortal then
+        print("|cff00ccff[SolaQoL]|r " .. string_format(L.PORTAL_ACTIVATED_FMT, dungeonName))
+    end
 end
 
 
