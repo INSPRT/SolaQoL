@@ -194,6 +194,14 @@ PortalBtn:HookScript("PreClick", function(self)
 
     local spellID   = self.spellID
     local spellName = self:GetAttribute("spell1")
+    
+    if spellID and not spellName then
+        local dungeonName = self.dungeonName or "해당 던전"
+        SolaQoL_ErrorFrame:AddMessage(dungeonName .. " 포탈 주문을 아직 습득하지 않았습니다!", 1.0, 0.2, 0.2, 1.0)
+        print("|cffff0000[SolaQoL]|r " .. dungeonName .. " 포탈 주문을 아직 습득하지 않았습니다.")
+        return
+    end
+
     if spellID and spellName then
         local start, duration
         if C_Spell and C_Spell.GetSpellCooldown then
@@ -343,10 +351,8 @@ local function ApplyPortalUI(spellID, dungeonName, title)
     local gap      = 12
     local shortName   = DungeonShortNames[dungeonName] or dungeonName
     local displayText = string_format(L.OVERLAY_PORTAL_FMT or "%s", shortName)
-    local labelColor  = isKnown and {1, 1, 1} or {0.6, 0.6, 0.6}
-
     PortalBtn.Label:SetText(displayText)
-    PortalBtn.Label:SetTextColor(labelColor[1], labelColor[2], labelColor[3])
+    PortalBtn.Label:SetTextColor(1, 1, 1)
 
     local labelW = PortalBtn.Label:GetStringWidth()
     local totalW = labelW + gap + iconSize
@@ -383,12 +389,19 @@ local function ApplyPortalUI(spellID, dungeonName, title)
         PortalBtn.AnnounceBtn:Hide()
     end
 
+    -- Overlay overall colors (always retain standard gold & dark style)
+    PortalBtn.TopBar:SetColorTexture(212/255, 167/255, 69/255, 1)
+    PortalBtn:SetBackdropBorderColor(0, 0, 0, 1)
+
     if isKnown then
-        PortalBtn.TopBar:SetColorTexture(212/255, 167/255, 69/255, 1)
-        PortalBtn:SetBackdropBorderColor(0, 0, 0, 1)
+        PortalBtn.IconBorder:SetColorTexture(0, 0, 0, 1)
+        if PortalBtn.Icon.SetDesaturated then PortalBtn.Icon:SetDesaturated(false) end
+        PortalBtn.Icon:SetVertexColor(1, 1, 1)
     else
-        PortalBtn.TopBar:SetColorTexture(0.5, 0.5, 0.5, 1)
-        PortalBtn:SetBackdropBorderColor(0.3, 0.3, 0.3, 1)
+        -- Unlearned spell: Only desaturate the icon and wrap it in a 1px red border
+        PortalBtn.IconBorder:SetColorTexture(1, 0.2, 0.2, 1)
+        if PortalBtn.Icon.SetDesaturated then PortalBtn.Icon:SetDesaturated(true) end
+        PortalBtn.Icon:SetVertexColor(0.85, 0.85, 0.85)
     end
 
     PortalBtn:SetAlpha(1)   -- Restore alpha in case it was hidden during combat.
