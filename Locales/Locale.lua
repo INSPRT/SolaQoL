@@ -9,7 +9,7 @@ local L = SolaQoL_L
 L.MSG_HELLO_DEFAULT     = "Hello"
 L.MSG_GG_DEFAULT        = "Good game"
 L.MSG_FULL              = "Party is full!"
-L.MSG_NEW_APPLICANT     = "New party applicant!!"
+L.MSG_NEW_APPLICANT     = "New party applicant"
 
 -- ===== Tooltip / Item Level =====
 L.ILVL_COLON            = "Item Level:"

@@ -11,7 +11,7 @@ local L = SolaQoL_L
 L.MSG_HELLO_DEFAULT     = "안녕하세요"
 L.MSG_GG_DEFAULT        = "수고하셨습니다"
 L.MSG_FULL              = "파티원이 모두 모였습니다"
-L.MSG_NEW_APPLICANT     = "새로운 파티 신청자!!"
+L.MSG_NEW_APPLICANT     = "신규 파티 신청"
 
 -- ===== Tooltip / Item Level =====
 L.ILVL_COLON            = "아이템 레벨:"
