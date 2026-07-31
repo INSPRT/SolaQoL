@@ -42,7 +42,7 @@ NS.DB_DEFAULTS = {
     minimapAngle           = 45,
     enableKeywordAlert     = true,
     keywordAlertList        = "",
-    keywordAlertSound       = "KeywordSound",
+    keywordAlertSound       = "FreeNotification10",
     keywordAutoAddPlayer    = true,
     enableAutoRelease      = false,
     disableAutoReleaseHUD  = false,
@@ -50,6 +50,8 @@ NS.DB_DEFAULTS = {
     disabledHearthstones   = {},
     enableRandomHearthstone= true,
     enableHearthstoneOnClear= true,
+    enableApplicantAlertAll = false,
+    disableApplicantAlertInRaid = false,
 }
 
 -- Init DB with defaults and run schema migrations

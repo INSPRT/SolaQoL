@@ -88,6 +88,10 @@ local function CreateCheck(parent, label)
 
     local text = btn:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     text:SetPoint("LEFT", btn, "RIGHT", 8, 0)
+    if parent then
+        text:SetPoint("RIGHT", parent, "RIGHT", -16, 0)
+        text:SetJustifyH("LEFT")
+    end
     text:SetText(label)
     text:SetTextColor(C.fgMain[1], C.fgMain[2], C.fgMain[3])
     btn.text = text
@@ -512,7 +516,7 @@ local function CreateSoundRow(parent, labelText, dbKeyPath, dbKeyMute,
             { name = L.SOUND_OPT_CUSTOM or "Custom Path", value = "custom" },
             { name = L.SOUND_OPT_DEFAULT or "Default Sound", value = "default" },
         }
-        for i = 1, 9 do
+        for i = 1, 10 do
             table.insert(opts, {
                 name = string.format(L.SOUND_NOTIFICATION_FMT or "Sound %d", i),
                 value = "FreeNotification" .. i
@@ -1512,7 +1516,7 @@ builders.ilvl = function(parent)
             {name = "KeywordSound (기본)", value = "KeywordSound"},
             {name = "귓속말 (Whisper)", value = "whisper"},
         }
-        for i = 1, 9 do
+        for i = 1, 10 do
             table.insert(opts, {
                 name = string.format(L.SOUND_NOTIFICATION_FMT or "Sound %d", i),
                 value = "FreeNotification" .. i
@@ -2093,6 +2097,27 @@ builders.sound = function(parent)
     sndRow3.label:SetPoint("TOPLEFT", PAD, y)
     y = y - 100
 
+    local appNoRaidChk -- forward declare for enable toggle
+
+    local appAllChk = CreateCheck(ct, L.OPT_APPLICANT_ALERT_ALL)
+    appAllChk:SetPoint("TOPLEFT", PAD, y)
+    appAllChk.onClick = function(state)
+        SolaQoLDB.enableApplicantAlertAll = state
+        if appNoRaidChk then
+            appNoRaidChk:SetEnabledState(state)
+        end
+        NS.PrintToggleMsg(L.OPT_APPLICANT_ALERT_ALL, state)
+    end
+    y = y - 30
+
+    appNoRaidChk = CreateCheck(ct, L.OPT_APPLICANT_NO_RAID)
+    appNoRaidChk:SetPoint("TOPLEFT", PAD + INDENT, y)
+    appNoRaidChk.onClick = function(state)
+        SolaQoLDB.disableApplicantAlertInRaid = state
+        NS.PrintToggleMsg(L.OPT_APPLICANT_NO_RAID, state)
+    end
+    y = y - 35
+
     local rChk = CreateCheck(ct, L.OPT_RAID_SOUND)
     rChk:SetPoint("TOPLEFT", PAD, y)
     rChk.onClick = function(state)
@@ -2101,23 +2126,41 @@ builders.sound = function(parent)
     end
     y = y - 35
 
+    y = y - 10
+
+    local maxGuideW = CONTENT_W - PAD * 2
+
+    local guideTitle = ct:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    guideTitle:SetPoint("TOPLEFT", PAD, y)
+    guideTitle:SetWidth(maxGuideW)
+    guideTitle:SetJustifyH("LEFT")
+    guideTitle:SetText(L.SOUND_GUIDE_HEADER or "[ 사용자 지정 사운드 파일 적용 방법 ]")
+    guideTitle:SetTextColor(C.gold[1], C.gold[2], C.gold[3])
+    y = y - (guideTitle:GetStringHeight() or 14) - 6
+
     local guide1 = ct:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
     guide1:SetPoint("TOPLEFT", PAD, y)
+    guide1:SetWidth(maxGuideW)
+    guide1:SetJustifyH("LEFT")
     guide1:SetText(L.SOUND_GUIDE1)
     guide1:SetTextColor(C.fgDisabled[1], C.fgDisabled[2], C.fgDisabled[3])
-    y = y - 16
+    y = y - (guide1:GetStringHeight() or 14) - 6
 
     local guide2 = ct:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
     guide2:SetPoint("TOPLEFT", PAD, y)
+    guide2:SetWidth(maxGuideW)
+    guide2:SetJustifyH("LEFT")
     guide2:SetText(L.SOUND_GUIDE2)
     guide2:SetTextColor(C.fgDisabled[1], C.fgDisabled[2], C.fgDisabled[3])
-    y = y - 22
+    y = y - (guide2:GetStringHeight() or 14) - 10
 
     local warning = ct:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
     warning:SetPoint("TOPLEFT", PAD, y)
+    warning:SetWidth(maxGuideW)
+    warning:SetJustifyH("LEFT")
     warning:SetText(L.SOUND_WARNING)
     warning:SetTextColor(C.rose[1], C.rose[2], C.rose[3])
-    y = y - 20
+    y = y - (warning:GetStringHeight() or 14) - 10
 
     ct.contentHeight = math.abs(y) + PAD
 
@@ -2125,6 +2168,10 @@ builders.sound = function(parent)
         sndRow1.updateVisual()
         sndRow2.updateVisual()
         sndRow3.updateVisual()
+        local appAllState = SolaQoLDB.enableApplicantAlertAll or false
+        appAllChk:SetChecked(appAllState)
+        appNoRaidChk:SetChecked(SolaQoLDB.disableApplicantAlertInRaid or false)
+        appNoRaidChk:SetEnabledState(appAllState)
         rChk:SetChecked(SolaQoLDB.enableRaidSound)
     end
 

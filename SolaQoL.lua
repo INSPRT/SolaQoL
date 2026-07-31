@@ -272,7 +272,10 @@ f:SetScript("OnEvent", function(_, ev, arg1, arg2)
         -- Wait a bit for group state sync and data loading during join transition
         if applicantTimer then applicantTimer:Cancel() end
         applicantTimer = C_Timer.NewTimer(0.3, function()
-            if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then
+            if IsInRaid() and SolaQoLDB.disableApplicantAlertInRaid then
+                return
+            end
+            if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or SolaQoLDB.enableApplicantAlertAll then
                 if C_LFGList.HasActiveEntryInfo() then
                     local _, numAct = C_LFGList.GetNumApplicants()
                     numAct = numAct or 0
