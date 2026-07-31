@@ -1,8 +1,8 @@
-## Interface: 120005, 120007
+## Interface: 120005, 120007, 120100
 ## Title: SolaQoL
 ## Notes: Automatic Greeting and Better Sound Alerts
 ## Author: progative
-## Version: 0.5.5
+## Version: 0.6.0-alpha1
 ## X-Curse-Project-ID: 1470959
 ## SavedVariables: SolaQoLDB
 ## SavedVariablesPerCharacter: SolaQoLCharDB

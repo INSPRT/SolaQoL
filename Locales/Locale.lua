@@ -164,6 +164,7 @@ L.OPT_DISABLE_AUTO_RELEASE_HUD = "Disable Auto-Release HUD Indicator"
 
 -- ===== Dungeon Portals =====
 L.DungeonPortals = {
+    -- Season 1
     ["Seat of the Triumvirate"]  = 1254551,
     ["Pit of Saron"]             = 1254555,
     ["Skyreach"]                 = 159898,
@@ -172,9 +173,19 @@ L.DungeonPortals = {
     ["Nexus-Point Xenas"]        = 1254563,
     ["Maisara Caverns"]          = 1254559,
     ["Algeth'ar Academy"]        = 393273,
+    -- Season 2
+    ["Murder Row"]               = 1286809,
+    ["Den of Nalorakk"]          = 1286807,
+    ["The Blinding Vale"]        = 1286801,
+    ["Voidscar Arena"]           = 1286804,
+    ["Altar of Fangs"]           = 1286812,
+    ["Temple of Sethraliss"]     = 1286828,
+    ["King's Rest"]              = 1286831,
+    ["Ruby Life Pools"]          = 393256,
 }
 
 L.DungeonShortNames = {
+    -- Season 1
     ["Seat of the Triumvirate"]  = "SoT",
     ["Pit of Saron"]             = "PoS",
     ["Skyreach"]                 = "SR",
@@ -183,6 +194,15 @@ L.DungeonShortNames = {
     ["Nexus-Point Xenas"]        = "NPX",
     ["Maisara Caverns"]          = "MC",
     ["Algeth'ar Academy"]        = "AA",
+    -- Season 2
+    ["Murder Row"]               = "MR",
+    ["Den of Nalorakk"]          = "DoN",
+    ["The Blinding Vale"]        = "TBV",
+    ["Voidscar Arena"]           = "VA",
+    ["Altar of Fangs"]           = "AoF",
+    ["Temple of Sethraliss"]     = "ToS",
+    ["King's Rest"]              = "KR",
+    ["Ruby Life Pools"]          = "RLP",
 }
 
 -- ===== Random Hearthstone =====
@@ -210,11 +230,11 @@ L.SOUND_BLOODLUST_READY = "LustRdy.mp3"
 L.SOUND_BLOODLUST_START = "LustOn.mp3"
 L.HUD_AUTO_RELEASE = "Auto-Rel"
 
-L.UPDATE_NOTE_LATEST = "- Minor updates and improvements"
+L.UPDATE_NOTE_LATEST = "- [Alpha] Added WoW 12.1.0 PTR support & Midnight S2 portal spell IDs"
 
 L.CAT_CHANGELOG = "Changelog"
 L.UPDATE_POPUP_TEXT = "26-07-19 / 0.5.5\n\n |cffD4A745[ New Feature ]|r\n\n - Minor updates and improvements have been applied.\n\n Type |cffffff00/SQ|r and check it out in the settings menu."
-L.CHANGELOG_TEXT = "26-07-19 / 0.5.5\n - Minor updates and improvements\n\n26-07-19 / 0.5.4\n - Minor updates and improvements\n\n26-07-10 / 0.5.3\n - New notification sounds have been added. Check them out in the dropdown list.\n\n26-07-08 / 0.5.2\n - Added Bloodlust Text & Audio Alert features for start and ready events.\n\n26-07-07 / 0.5.1\n - Minor bug fixes\n\n26-07-06 / 0.5.0\n - The addon has been renamed to 'SolaQoL'.\n\n26-07-01 / 0.4.4\n - Added Random Hearthstone feature. You can add/remove desired toys in the Hearthstone list from the settings. You can also assign a keybind to it.\n\n26-06-30 / 0.4.3\n - Fixed an issue where changing the position and size of the dungeon portal overlay did not save properly\n\n26-06-27 / 0.4.2\n - Fixed an issue where the destination notification button did not work properly\n\n26-06-26 / 0.4.1\n - Added a feature to automatically add the current character's name to the alert keywords\n\n26-06-26 / 0.4.0\n - Fixed auto-release spirit feature not working properly in raids\n\n26-06-25 / 0.3.9\n - Revamped UI, memory leak & performance improvements, minor bug fixes\n - Added Chat Keyword Alert feature\n - Added ultra-fast Auto-Release Spirit feature (for raid progression)\n - Added persistent Trade History table (retained across reload/re-log with edit detection)\n - Various audio selections are now available for alert sounds."
+L.CHANGELOG_TEXT = "26-07-31 / 0.6.0-alpha1\n - [Alpha] Added WoW 12.1.0 PTR support & Midnight S2 portal spell IDs\n\n26-07-19 / 0.5.5\n - Minor updates and improvements\n\n26-07-19 / 0.5.4\n - Minor updates and improvements\n\n26-07-10 / 0.5.3\n - New notification sounds have been added. Check them out in the dropdown list.\n\n26-07-08 / 0.5.2\n - Added Bloodlust Text & Audio Alert features for start and ready events.\n\n26-07-07 / 0.5.1\n - Minor bug fixes\n\n26-07-06 / 0.5.0\n - The addon has been renamed to 'SolaQoL'.\n\n26-07-01 / 0.4.4\n - Added Random Hearthstone feature. You can add/remove desired toys in the Hearthstone list from the settings. You can also assign a keybind to it.\n\n26-06-30 / 0.4.3\n - Fixed an issue where changing the position and size of the dungeon portal overlay did not save properly\n\n26-06-27 / 0.4.2\n - Fixed an issue where the destination notification button did not work properly\n\n26-06-26 / 0.4.1\n - Added a feature to automatically add the current character's name to the alert keywords\n\n26-06-26 / 0.4.0\n - Fixed auto-release spirit feature not working properly in raids\n\n26-06-25 / 0.3.9\n - Revamped UI, memory leak & performance improvements, minor bug fixes\n - Added Chat Keyword Alert feature\n - Added ultra-fast Auto-Release Spirit feature (for raid progression)\n - Added persistent Trade History table (retained across reload/re-log with edit detection)\n - Various audio selections are now available for alert sounds."
 
 -- ===== Key Bindings =====
 BINDING_HEADER_SOLAQOL = "SolaQoL"
