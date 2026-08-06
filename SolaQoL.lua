@@ -37,6 +37,7 @@ if InviteUnit then hooksecurefunc("InviteUnit", ClearOldTitleOnManualInvite) end
 
 local rosterTimer = nil
 local applicantTimer = nil
+local initTimer = nil
 
 local function OnRosterUpdate()
     if not St.isInit then
@@ -239,7 +240,13 @@ f:SetScript("OnEvent", function(_, ev, arg1, arg2)
             end
         end
 
-        C_Timer.After(5, function() St.isInit = true end)
+        if initTimer then initTimer:Cancel() end
+        initTimer = C_Timer.NewTimer(5, function()
+            St.prevType = NS.GetGrpType()
+            St.prevMems, St.prevCount = NS.GetCurrentMembers()
+            St.shouldGreet = false
+            St.isInit = true
+        end)
 
 
     elseif ev == "GROUP_ROSTER_UPDATE" then
@@ -288,7 +295,7 @@ f:SetScript("OnEvent", function(_, ev, arg1, arg2)
                                 PlaySound(SOUNDKIT.RAID_WARNING, "Master")
                             end
                         end
-                        print("|cff00ff00" .. L.PARTY_RECRUIT .. "|r " .. L.MSG_NEW_APPLICANT .. string_format(L.APPLICANT_WAITING_FMT, numAct))
+                        print("|cff00ccff[SolaQoL]|r " .. L.MSG_NEW_APPLICANT .. string_format(L.APPLICANT_WAITING_FMT, numAct))
                         if PVEFrame and not PVEFrame:IsShown() then
                             if LFGListUtil_OpenBestWindow then
                                 LFGListUtil_OpenBestWindow()
